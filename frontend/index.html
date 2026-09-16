@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD Blog</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📝 My CRUD Blog</h1>
+    <p class="subtitle">Create • Read • Update • Delete</p>
+
+    <form id="blogForm">
+      <input type="hidden" id="blogId">
+      <input id="title" type="text" placeholder="Blog title" required>
+      <textarea id="content" placeholder="Write your blog content..." required></textarea>
+      <button type="submit" id="submitBtn">Add Blog</button>
+      <button type="button" id="cancelBtn" class="cancel hidden">Cancel Edit</button>
+    </form>
+
+    <p id="message"></p>
+    <div id="blogs"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
