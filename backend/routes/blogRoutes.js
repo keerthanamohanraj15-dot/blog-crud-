@@ -1,19 +1,25 @@
 const express = require("express");
 const Blog = require("../models/Blog");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-// CREATE
-router.post("/", async (req, res) => {
+// CREATE BLOG - Login required
+router.post("/", authMiddleware, async (req, res) => {
   try {
-    const blog = await Blog.create(req.body);
+    const blog = await Blog.create({
+      title: req.body.title,
+      content: req.body.content,
+      author: req.user.id
+    });
+
     res.status(201).json(blog);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-// READ
+// READ BLOGS
 router.get("/", async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ createdAt: -1 });
@@ -23,28 +29,45 @@ router.get("/", async (req, res) => {
   }
 });
 
-// UPDATE
-router.put("/:id", async (req, res) => {
+// UPDATE BLOG
+router.put("/:id", authMiddleware, async (req, res) => {
   try {
-    const blog = await Blog.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
+    const blog = await Blog.findOneAndUpdate(
+      { _id: req.params.id, author: req.user.id },
+      {
+        title: req.body.title,
+        content: req.body.content
+      },
+      { new: true }
+    );
 
-    if (!blog) return res.status(404).json({ message: "Blog not found" });
+    if (!blog) {
+      return res.status(404).json({
+        message: "Blog not found or you are not the owner."
+      });
+    }
+
     res.json(blog);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-// DELETE
-router.delete("/:id", async (req, res) => {
+// DELETE BLOG
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
-    const blog = await Blog.findByIdAndDelete(req.params.id);
+    const blog = await Blog.findOneAndDelete({
+      _id: req.params.id,
+      author: req.user.id
+    });
 
-    if (!blog) return res.status(404).json({ message: "Blog not found" });
-    res.json({ message: "Blog deleted successfully" });
+    if (!blog) {
+      return res.status(404).json({
+        message: "Blog not found or you are not the owner."
+      });
+    }
+
+    res.json({ message: "Blog deleted successfully." });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
