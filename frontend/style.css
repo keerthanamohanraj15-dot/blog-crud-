@@ -1,84 +1,461 @@
+/* ========================================
+   GLOBAL
+======================================== */
+
 * {
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  color: #222;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    color: #1e293b;
+    min-height: 100vh;
 }
+
+a {
+    text-decoration: none;
+}
+
+button,
+input,
+textarea {
+    font-family: inherit;
+}
+
+
+/* ========================================
+   NAVBAR
+======================================== */
+
+nav {
+    width: 100%;
+    background: #0f172a;
+    padding: 18px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+nav h2 {
+    color: white;
+    font-size: 24px;
+}
+
+nav a {
+    color: white;
+    font-weight: 600;
+    margin-left: 20px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #38bdf8;
+}
+
+
+/* ========================================
+   MAIN CONTAINER
+======================================== */
 
 .container {
-  width: 90%;
-  max-width: 850px;
-  margin: 40px auto;
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 5px;
+
+/* ========================================
+   HOME PAGE
+======================================== */
+
+.hero {
+    text-align: center;
+    padding: 80px 20px 60px;
 }
 
-.subtitle {
-  text-align: center;
-  color: #666;
+.hero h1 {
+    font-size: 48px;
+    color: #0f172a;
+    margin-bottom: 20px;
 }
 
-form, .blog {
-  background: white;
-  padding: 20px;
-  margin: 20px 0;
-  border-radius: 12px;
-  box-shadow: 0 3px 12px rgba(0,0,0,.08);
+.hero p {
+    max-width: 750px;
+    margin: 0 auto 30px;
+    color: #475569;
+    font-size: 18px;
+    line-height: 1.7;
 }
 
-input, textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
+
+/* ========================================
+   BUTTONS
+======================================== */
+
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 5px;
+}
+
+button:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+
+/* ========================================
+   BLOG FEATURE CARDS
+======================================== */
+
+.blog-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 20px auto 60px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.blog-card {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    text-align: center;
+
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+
+    transition: 0.3s;
+}
+
+.blog-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+}
+
+.blog-card h2 {
+    color: #0f172a;
+    margin-bottom: 12px;
+}
+
+.blog-card p {
+    color: #64748b;
+}
+
+
+/* ========================================
+   LOGIN / REGISTER FORMS
+======================================== */
+
+form {
+    width: 90%;
+    max-width: 450px;
+    margin: 60px auto;
+
+    background: white;
+    padding: 35px;
+
+    border-radius: 18px;
+
+    box-shadow: 0 10px 35px rgba(15, 23, 42, 0.12);
+}
+
+form h1,
+form h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #0f172a;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+    color: #334155;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 13px 15px;
+    margin-bottom: 18px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+
+    font-size: 16px;
+    outline: none;
+    background: #fff;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
 }
 
 textarea {
-  min-height: 130px;
-  resize: vertical;
+    min-height: 150px;
+    resize: vertical;
 }
 
-button {
-  border: 0;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-right: 8px;
-  background: #333;
-  color: white;
+
+/* ========================================
+   DASHBOARD
+======================================== */
+
+.dashboard {
+    width: 90%;
+    max-width: 1100px;
+    margin: 45px auto;
 }
 
-.delete {
-  background: #b42318;
+.dashboard h1 {
+    text-align: center;
+    font-size: 38px;
+    color: #0f172a;
+    margin-bottom: 20px;
 }
 
-.cancel {
-  background: #777;
+.dashboard h2 {
+    text-align: center;
+    color: #1e293b;
+    margin: 35px 0 20px;
 }
 
-.hidden {
-  display: none;
+
+/* Dashboard navigation */
+
+.dashboard > a,
+.dashboard > button {
+    margin-right: 8px;
 }
 
-.blog h2 {
-  margin-top: 0;
+
+/* ========================================
+   DASHBOARD BLOG POSTS
+======================================== */
+
+/* Makes plain blog content look like cards */
+
+.dashboard > div,
+#blogs > div,
+#blogList > div,
+.blog-list > div {
+    background: white;
+    padding: 25px;
+    margin: 18px auto;
+
+    max-width: 900px;
+
+    border-radius: 15px;
+
+    box-shadow: 0 6px 20px rgba(15,23,42,0.08);
 }
 
-.blog p {
-  white-space: pre-wrap;
-  line-height: 1.6;
+.dashboard h3,
+#blogs h3,
+#blogList h3 {
+    color: #0f172a;
+    margin-bottom: 10px;
 }
+
+.dashboard p,
+#blogs p,
+#blogList p {
+    color: #64748b;
+    line-height: 1.6;
+}
+
+
+/* ========================================
+   BLOG ACTION BUTTONS
+======================================== */
+
+.edit-btn {
+    background: #f59e0b;
+}
+
+.edit-btn:hover {
+    background: #d97706;
+}
+
+.delete-btn {
+    background: #dc2626;
+}
+
+.delete-btn:hover {
+    background: #b91c1c;
+}
+
+
+/* ========================================
+   PROFILE
+======================================== */
+
+.profile-card {
+    width: 90%;
+    max-width: 600px;
+
+    margin: 60px auto;
+
+    background: white;
+    padding: 35px;
+
+    border-radius: 18px;
+
+    box-shadow: 0 10px 30px rgba(15,23,42,0.1);
+}
+
+.profile-card h1,
+.profile-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.profile-card p {
+    padding: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+    color: #475569;
+}
+
+
+/* ========================================
+   MESSAGES
+======================================== */
 
 #message {
-  text-align: center;
-  font-weight: bold;
+    width: 90%;
+    max-width: 500px;
+    margin: 15px auto;
+    padding: 12px;
+
+    text-align: center;
+    border-radius: 8px;
+}
+
+.success {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.error {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+
+/* ========================================
+   FOOTER
+======================================== */
+
+footer {
+    text-align: center;
+    padding: 35px 20px;
+    color: #64748b;
+}
+
+
+/* ========================================
+   MOBILE RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+
+    nav {
+        flex-direction: column;
+        padding: 18px 15px;
+        text-align: center;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 6px 8px;
+    }
+
+    .hero {
+        padding: 55px 15px 40px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .blog-container {
+        grid-template-columns: 1fr;
+    }
+
+    form {
+        width: 92%;
+        padding: 25px;
+        margin: 35px auto;
+    }
+
+    .dashboard {
+        width: 92%;
+        margin: 30px auto;
+    }
+
+    .dashboard h1 {
+        font-size: 30px;
+    }
+
+    button {
+        width: 100%;
+        margin: 6px 0;
+    }
+}
+
+
+/* ========================================
+   SMALL MOBILE
+======================================== */
+
+@media (max-width: 480px) {
+
+    nav h2 {
+        font-size: 21px;
+    }
+
+    nav a {
+        font-size: 14px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .blog-card {
+        padding: 22px;
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    input,
+    textarea {
+        font-size: 15px;
+    }
 }

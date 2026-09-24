@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Connect CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <title>Dashboard - My Blog</title>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <h2>✍️ CRUD Blog</h2>
+
+        <div>
+            <a href="index.html">Home</a>
+            <a href="profile.html">Profile</a>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+
+    <!-- Dashboard -->
+    <main class="dashboard">
+
+        <div class="dashboard-header">
+            <h1>My Dashboard</h1>
+
+            <p id="welcome">
+                Welcome to your personal blog dashboard!
+            </p>
+        </div>
+
+
+        <!-- Blog Section -->
+        <section>
+
+            <h2>📝 My Blogs</h2>
+
+            <div id="blogs" class="blog-list">
+                <!-- Blogs will be loaded here by dashboard.js -->
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 CRUD Blog | Full Stack Web Application</p>
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="dashboard.js"></script>
+
+</body>
+
+</html>

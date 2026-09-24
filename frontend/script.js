@@ -9,6 +9,10 @@ const message = document.getElementById("message");
 const submitBtn = document.getElementById("submitBtn");
 const cancelBtn = document.getElementById("cancelBtn");
 
+
+// ===============================
+// LOAD BLOGS
+// ===============================
 async function loadBlogs() {
   try {
     const response = await fetch(API);
@@ -18,90 +22,181 @@ async function loadBlogs() {
 
     blogs.forEach(blog => {
       const div = document.createElement("div");
-      div.className = "blog";
 
-      const h2 = document.createElement("h2");
-      h2.textContent = blog.title;
+      div.innerHTML = `
+        <h3>${blog.title}</h3>
+        <p>${blog.content}</p>
+        <button onclick="editBlog('${blog._id}', '${blog.title.replace(/'/g, "\\'")}', '${blog.content.replace(/'/g, "\\'")}')">
+          Edit
+        </button>
 
-      const p = document.createElement("p");
-      p.textContent = blog.content;
+        <button onclick="deleteBlog('${blog._id}')">
+          Delete
+        </button>
 
-      const editBtn = document.createElement("button");
-      editBtn.textContent = "Edit ✏️";
-      editBtn.onclick = () => editBlog(blog);
+        <hr>
+      `;
 
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "Delete 🗑️";
-      deleteBtn.className = "delete";
-      deleteBtn.onclick = () => deleteBlog(blog._id);
-
-      div.append(h2, p, editBtn, deleteBtn);
       blogsDiv.appendChild(div);
     });
+
   } catch (error) {
-    message.textContent = "Backend is not running.";
+    console.error(error);
+    message.textContent = "Could not load blogs.";
   }
 }
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+
+// ===============================
+// ADD / UPDATE BLOG
+// ===============================
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const token = localStorage.getItem("token");
+
+  // Check login
+  if (!token) {
+    alert("Please login first.");
+    window.location.href = "login.html";
+    return;
+  }
 
   const data = {
     title: title.value,
     content: content.value
   };
 
-  const id = blogId.value;
-  const url = id ? `${API}/${id}` : API;
-  const method = id ? "PUT" : "POST";
-
   try {
-    const response = await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
 
-    if (!response.ok) throw new Error("Request failed");
+    // UPDATE
+    if (blogId.value) {
 
-    message.textContent = id ? "Blog updated successfully! ✅" : "Blog added successfully! ✅";
-    resetForm();
+      const response = await fetch(`${API}/${blogId.value}`, {
+        method: "PUT",
+
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message);
+      }
+
+      message.textContent = "Blog updated successfully!";
+
+    }
+
+    // ADD
+    else {
+
+      const response = await fetch(API, {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message);
+      }
+
+      message.textContent = "Blog added successfully!";
+    }
+
+    // Clear form
+    form.reset();
+    blogId.value = "";
+    submitBtn.textContent = "Add Blog";
+
     loadBlogs();
+
   } catch (error) {
-    message.textContent = "Something went wrong. Check the backend.";
+    console.error(error);
+    message.textContent = "Something went wrong: " + error.message;
   }
 });
 
-function editBlog(blog) {
-  blogId.value = blog._id;
-  title.value = blog.title;
-  content.value = blog.content;
+
+// ===============================
+// EDIT BLOG
+// ===============================
+function editBlog(id, blogTitle, blogContent) {
+
+  blogId.value = id;
+  title.value = blogTitle;
+  content.value = blogContent;
+
   submitBtn.textContent = "Update Blog";
-  cancelBtn.classList.remove("hidden");
-  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+
+// ===============================
+// CANCEL UPDATE
+// ===============================
+cancelBtn.addEventListener("click", () => {
+
+  form.reset();
+
+  blogId.value = "";
+
+  submitBtn.textContent = "Add Blog";
+
+  message.textContent = "";
+});
+
+
+// ===============================
+// DELETE BLOG
+// ===============================
 async function deleteBlog(id) {
-  if (!confirm("Are you sure you want to delete this blog?")) return;
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login first.");
+    window.location.href = "login.html";
+    return;
+  }
 
   try {
-    const response = await fetch(`${API}/${id}`, { method: "DELETE" });
-    if (!response.ok) throw new Error("Delete failed");
 
-    message.textContent = "Blog deleted successfully! ✅";
+    const response = await fetch(`${API}/${id}`, {
+      method: "DELETE",
+
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message);
+    }
+
+    message.textContent = "Blog deleted successfully!";
+
     loadBlogs();
+
   } catch (error) {
-    message.textContent = "Delete failed.";
+    console.error(error);
+    message.textContent = "Delete failed: " + error.message;
   }
 }
 
-cancelBtn.onclick = resetForm;
 
-function resetForm() {
-  form.reset();
-  blogId.value = "";
-  submitBtn.textContent = "Add Blog";
-  cancelBtn.classList.add("hidden");
-}
-
+// Load blogs when page opens
 loadBlogs();

@@ -1,28 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRUD Blog</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CRUD Blog</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <div class="container">
-    <h1>📝 My CRUD Blog</h1>
-    <p class="subtitle">Create • Read • Update • Delete</p>
 
-    <form id="blogForm">
-      <input type="hidden" id="blogId">
-      <input id="title" type="text" placeholder="Blog title" required>
-      <textarea id="content" placeholder="Write your blog content..." required></textarea>
-      <button type="submit" id="submitBtn">Add Blog</button>
-      <button type="button" id="cancelBtn" class="cancel hidden">Cancel Edit</button>
-    </form>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <h2>CRUD Blog</h2>
+        </div>
 
-    <p id="message"></p>
-    <div id="blogs"></div>
-  </div>
+        <div>
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="profile.html">Profile</a>
+        </div>
+    </nav>
 
-  <script src="script.js"></script>
+
+    <!-- Main Home Section -->
+    <main class="container">
+
+        <section class="hero">
+
+            <h1>Welcome to CRUD Blog</h1>
+
+            <p>
+                Create, read, update and delete your blog posts
+                with our full-stack blog application.
+            </p>
+
+            <div>
+                <a href="login.html">
+                    <button type="button">Login</button>
+                </a>
+
+                <a href="register.html">
+                    <button type="button">Create Account</button>
+                </a>
+            </div>
+
+        </section>
+
+
+        <!-- Features -->
+        <section class="blog-container">
+
+            <div class="blog-card">
+                <h2>✍️ Create Blogs</h2>
+                <p>
+                    Create and publish your own blog posts easily.
+                </p>
+            </div>
+
+            <div class="blog-card">
+                <h2>📖 Read Blogs</h2>
+                <p>
+                    View and read blog posts from your dashboard.
+                </p>
+            </div>
+
+            <div class="blog-card">
+                <h2>✏️ Update Blogs</h2>
+                <p>
+                    Edit your existing blog posts whenever you need.
+                </p>
+            </div>
+
+            <div class="blog-card">
+                <h2>🗑️ Delete Blogs</h2>
+                <p>
+                    Remove blog posts that you no longer need.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer style="text-align:center; padding:30px; color:#64748b;">
+        <p>© 2026 CRUD Blog | Full Stack Web Application</p>
+    </footer>
+
 </body>
 </html>
