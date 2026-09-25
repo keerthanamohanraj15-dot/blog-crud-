@@ -1,45 +1,78 @@
-# CRUD Blog - Module 4
+# CRUD Blog - Full Stack Blog Application
 
-Beginner-friendly Blog CRUD project using:
+Beginner-friendly full-stack Blog CRUD project using:
+
 - HTML, CSS, JavaScript
 - Node.js + Express
 - MongoDB + Mongoose
+- JWT Authentication
+- bcryptjs
 
-## CRUD features
+## 🚀 Features
+
+- User Registration
+- User Login
+- JWT Authentication
+- Secure Password Hashing
 - Create a blog
-- Read/view all blogs
+- Read/View blogs
 - Update a blog
 - Delete a blog
+- User Dashboard
+- User Profile
+- Logout
+- MongoDB Database
+- Responsive Design
 
-## Setup
+## 🛠️ Technologies Used
 
-### 1. Backend
-Open a terminal inside the `backend` folder:
+### Frontend
 
-```bash
-npm.cmd install
-```
+- HTML5
+- CSS3
+- JavaScript
 
-Copy `.env.example` to a new file named `.env` and put your MongoDB connection string in it:
+### Backend
+
+- Node.js
+- Express.js
+
+### Database
+
+- MongoDB
+- Mongoose
+
+### Authentication
+
+- JSON Web Token (JWT)
+- bcryptjs
+
+### Tools
+
+- Git
+- GitHub
+- VS Code
+- Render
+
+## 📁 Project Structure
 
 ```text
-MONGO_URI=your_mongodb_connection_string
-PORT=5000
-```
+backend/
+├── models/
+├── routes/
+├── middleware/
+├── .env
+├── package.json
+└── server.js
 
-Then run:
-
-```bash
-node server.js
-```
-
-### 2. Frontend
-Open `frontend/index.html` in a browser.
-
-Make sure the backend is running first.
-
-## API
-- POST `/api/blogs`
-- GET `/api/blogs`
-- PUT `/api/blogs/:id`
-- DELETE `/api/blogs/:id`
+frontend/
+├── index.html
+├── login.html
+├── register.html
+├── dashboard.html
+├── profile.html
+├── auth.js
+├── dashboard.js
+├── profile.js
+├── script.js
+└── style.css
