@@ -1,132 +1,116 @@
+const API_BASE = "https://blog-crud-fdql.onrender.com";
+
 const token = localStorage.getItem("token");
 
 if (!token) {
     window.location.href = "login.html";
 }
 
-const blogs = document.getElementById("blogs");
-const welcome = document.getElementById("welcome");
-const logoutBtn = document.getElementById("logoutBtn");
+// Load blogs
+async function loadBlogs() {
+    try {
+        const response = await fetch(`${API_BASE}/api/blogs`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
 
-// Welcome message
-if (welcome) {
-    welcome.innerText = "Welcome to your dashboard!";
+        const blogs = await response.json();
+
+        const blogsContainer = document.getElementById("blogs");
+        blogsContainer.innerHTML = "";
+
+        blogs.forEach(blog => {
+            const div = document.createElement("div");
+
+            div.innerHTML = `
+                <h3>${blog.title}</h3>
+                <p>${blog.content}</p>
+                <button onclick="deleteBlog('${blog._id}')">Delete</button>
+                <hr>
+            `;
+
+            blogsContainer.appendChild(div);
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 
-// Load blogs
-async function loadBlogs() {
+// Create blog
+document.getElementById("blogForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const title = document.getElementById("title").value;
+    const content = document.getElementById("content").value;
+    const message = document.getElementById("blogMessage");
 
     try {
-
-        const response = await fetch("http://localhost:5000/api/blogs", {
+        const response = await fetch(`${API_BASE}/api/blogs`, {
+            method: "POST",
             headers: {
-                "Authorization": "Bearer " + token
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                title: title,
+                content: content
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            message.textContent = "Blog created successfully!";
+
+            document.getElementById("blogForm").reset();
+
+            loadBlogs();
+        } else {
+            message.textContent = data.message || "Failed to create blog";
+        }
+
+    } catch (error) {
+        console.error(error);
+        message.textContent = "Server error";
+    }
+});
+
+
+// Delete blog
+async function deleteBlog(id) {
+    try {
+        const response = await fetch(`${API_BASE}/api/blogs/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
             }
         });
 
         const data = await response.json();
 
-        blogs.innerHTML = "";
-
-        if (!Array.isArray(data) || data.length === 0) {
-
-            blogs.innerHTML = `
-                <div class="blog-card">
-                    <h2>No Blogs Yet 📝</h2>
-                    <p>Create your first blog post.</p>
-                </div>
-            `;
-
-            return;
-        }
-
-        data.forEach(blog => {
-
-            const card = document.createElement("div");
-
-            card.className = "blog-card";
-
-            card.innerHTML = `
-                <h2>${blog.title}</h2>
-
-                <p>${blog.content}</p>
-
-                <button onclick="deleteBlog('${blog._id}')"
-                        class="delete-btn">
-                    🗑️ Delete
-                </button>
-            `;
-
-            blogs.appendChild(card);
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        blogs.innerHTML = `
-            <div class="blog-card">
-                <h2>⚠️ Unable to load blogs</h2>
-                <p>Make sure the backend server is running.</p>
-            </div>
-        `;
-    }
-}
-
-
-// Delete blog
-async function deleteBlog(id) {
-
-    if (!confirm("Delete this blog?")) {
-        return;
-    }
-
-    try {
-
-        const response = await fetch(
-            "http://localhost:5000/api/blogs/" + id,
-            {
-                method: "DELETE",
-                headers: {
-                    "Authorization": "Bearer " + token
-                }
-            }
-        );
-
         if (response.ok) {
-
             alert("Blog deleted successfully!");
-
             loadBlogs();
-
         } else {
-
-            alert("Delete failed.");
-
+            alert(data.message || "Delete failed");
         }
 
     } catch (error) {
-
         console.error(error);
-
-        alert("Server error.");
+        alert("Server error");
     }
 }
 
 
 // Logout
-if (logoutBtn) {
-
-    logoutBtn.addEventListener("click", function () {
-
-        localStorage.removeItem("token");
-
-        window.location.href = "login.html";
-
-    });
-
-}
+document.getElementById("logoutBtn").addEventListener("click", function () {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "login.html";
+});
 
 
 // Start

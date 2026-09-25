@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://blog-crud-fdql.onrender.com";
 
 // REGISTER
 const registerForm = document.getElementById("registerForm");
@@ -38,6 +38,7 @@ if (registerForm) {
       }, 500);
 
     } catch (error) {
+      console.error(error);
       message.textContent = "Server connection failed.";
     }
   });
@@ -81,6 +82,7 @@ if (loginForm) {
       }, 500);
 
     } catch (error) {
+      console.error(error);
       message.textContent = "Server connection failed.";
     }
   });

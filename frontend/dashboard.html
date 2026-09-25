@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Connect CSS -->
     <link rel="stylesheet" href="style.css">
 
     <title>Dashboard - My Blog</title>
@@ -37,7 +36,38 @@
         </div>
 
 
-        <!-- Blog Section -->
+        <!-- CREATE BLOG -->
+        <section>
+
+            <h2>➕ Create Blog</h2>
+
+            <form id="blogForm">
+
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Blog title"
+                    required
+                >
+
+                <textarea
+                    id="content"
+                    placeholder="Write your blog content..."
+                    required
+                ></textarea>
+
+                <button type="submit">
+                    Create Blog
+                </button>
+
+                <p id="blogMessage"></p>
+
+            </form>
+
+        </section>
+
+
+        <!-- BLOG LIST -->
         <section>
 
             <h2>📝 My Blogs</h2>
